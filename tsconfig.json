@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "target": "es6",                                  
+    "target": "es6",
     /* Modules */
     "module": "commonjs",                                /* Specify what module code is generated. */
     "baseUrl": "./src",
@@ -15,7 +15,14 @@
     /* Type Checking */
     "strict": true,                                      /* Enable all strict type-checking options. */
     /* Completeness */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "paths": {
+      "@models": ["models/index.ts"],
+      "@middleware": ["middleware/index.ts"],
+      "@controllers": ["controllers/index.ts"],
+      "@routes": ["routes/index.ts"],
+      "@type/*": ["types/*"]
+    }
   },
   "include": [
     "src/**/*.ts"
@@ -23,4 +30,7 @@
   "exclude": [
     "node_modules"
   ],
+  "files": [
+    "src/types/index.d.ts"
+  ]
 }
