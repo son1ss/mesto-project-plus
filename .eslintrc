@@ -1,5 +1,5 @@
 {
- "env": {
+  "env": {
     "es2021": true,
     "node": true
   },
@@ -36,6 +36,14 @@
       {
         "js": "never",
         "ts": "never"
+      }
+    ],
+    "camelcase": [
+      "error",
+      {
+        "properties": "never",
+        "ignoreDestructuring": true,
+        "allow": ["_id"]
       }
     ]
   },
