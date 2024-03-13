@@ -24,3 +24,12 @@ export class BadRequestError extends Error {
     this.statusCode = 400;
   }
 }
+
+export class ForbiddenError extends Error {
+  statusCode: number;
+  constructor(message = "Недостаточно прав") {
+    super(message);
+    this.name = "ForbiddenError";
+    this.statusCode = 403;
+  }
+}

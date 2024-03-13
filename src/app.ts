@@ -11,6 +11,7 @@ import {
   loginUserCelebrate,
   requestLogger,
 } from "@middleware";
+import { NotFoundError } from "@type/errors";
 
 const { createUser, loginUser } = UserController;
 
@@ -36,6 +37,10 @@ app.use(auth);
 
 app.use("/cards", CardRouter);
 app.use("/users", UserRouter);
+
+app.use((_req, _res, next) => {
+  next(new NotFoundError("Запрашиваемый ресурс не найден"));
+});
 
 app.use(errorLogger);
 app.use(errorHandler);

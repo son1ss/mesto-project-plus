@@ -1,10 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { CardModel, ICard } from "@models";
-import {
-  BadRequestError,
-  NotFoundError,
-  UnauthorizedError,
-} from "@type/errors";
+import { ForbiddenError, NotFoundError } from "@type/errors";
 
 export const getAllCards = async (
   req: Request,
@@ -28,10 +24,6 @@ export const createCard = async (
   const ownerId = req.user?._id;
 
   try {
-    if (!name || !link) {
-      throw new BadRequestError("Name and link are required");
-    }
-
     const newCard: ICard = new CardModel({
       name,
       link,
@@ -61,7 +53,7 @@ export const deleteCardById = async (
     }
 
     if (card.owner.toString() !== userId) {
-      throw new UnauthorizedError("You are not authorized to delete this card");
+      throw new ForbiddenError();
     }
 
     const deletedCard = await CardModel.findByIdAndDelete(cardId);
@@ -83,7 +75,7 @@ export const likeCard = async (
     const likedCard = await CardModel.findByIdAndUpdate(
       req.params.cardId,
       { $addToSet: { likes: userId } },
-      { new: true }
+      { runValidators: true, new: true }
     );
 
     if (!likedCard) {

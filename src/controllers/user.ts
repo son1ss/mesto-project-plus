@@ -54,10 +54,6 @@ export const createUser = async (
     password,
   } = req.body;
 
-  if (!email || !password) {
-    throw new BadRequestError("Email and password are required");
-  }
-
   try {
     const existingUser = await UserModel.findOne({ email });
 
@@ -94,7 +90,7 @@ export const updateUserProfile = async (
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { name, about },
-      { new: true }
+      { runValidators: true, new: true }
     );
 
     if (!updatedUser) {
@@ -119,7 +115,7 @@ export const updateUserAvatar = async (
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { avatar },
-      { new: true }
+      { runValidators: true, new: true }
     );
 
     if (!updatedUser) {
