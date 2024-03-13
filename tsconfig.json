@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "typeRoots": [
+      "./src/global.d.ts"
+    ],
     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "target": "es6",
     /* Modules */
@@ -31,6 +34,6 @@
     "node_modules"
   ],
   "files": [
-    "src/types/index.d.ts"
+    "src/global.d.ts"
   ]
 }

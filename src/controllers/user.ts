@@ -1,17 +1,17 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import { Request, Response, NextFunction } from "express";
-import { UserModel, IUser } from "@models";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { Request, Response, NextFunction } from 'express';
+import { UserModel, IUser } from '@models';
 import {
   BadRequestError,
   NotFoundError,
   UnauthorizedError,
-} from "@type/errors";
+} from '@type/errors';
 
 export const getAllUsers = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const users = await UserModel.find();
@@ -24,7 +24,7 @@ export const getAllUsers = async (
 export const getUserById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { userId } = req.params;
 
@@ -32,7 +32,7 @@ export const getUserById = async (
     const user = await UserModel.findById(userId);
 
     if (!user) {
-      throw new NotFoundError("User not found");
+      throw new NotFoundError('User not found');
     }
 
     res.json(user);
@@ -44,12 +44,12 @@ export const getUserById = async (
 export const createUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const {
-    name = "Жак-Ив Кусто",
-    about = "Исследователь",
-    avatar = "стандартная ссылка",
+    name = 'Жак-Ив Кусто',
+    about = 'Исследователь',
+    avatar = 'стандартная ссылка',
     email,
     password,
   } = req.body;
@@ -58,7 +58,7 @@ export const createUser = async (
     const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
-      throw new BadRequestError("User with this email already exists");
+      throw new BadRequestError('User with this email already exists');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -81,7 +81,7 @@ export const createUser = async (
 export const updateUserProfile = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { name, about } = req.body;
   const userId = req.user?._id;
@@ -90,11 +90,11 @@ export const updateUserProfile = async (
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { name, about },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     );
 
     if (!updatedUser) {
-      throw new NotFoundError("User not found");
+      throw new NotFoundError('User not found');
     }
 
     res.json(updatedUser);
@@ -106,7 +106,7 @@ export const updateUserProfile = async (
 export const updateUserAvatar = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { avatar } = req.body;
   const userId = req.user?._id;
@@ -115,11 +115,11 @@ export const updateUserAvatar = async (
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { avatar },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     );
 
     if (!updatedUser) {
-      throw new NotFoundError("User not found");
+      throw new NotFoundError('User not found');
     }
 
     res.json(updatedUser);
@@ -131,7 +131,7 @@ export const updateUserAvatar = async (
 export const getUserProfile = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const userId = req.user?._id;
 
@@ -139,7 +139,7 @@ export const getUserProfile = async (
     const user = await UserModel.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     res.json(user);
@@ -151,27 +151,27 @@ export const getUserProfile = async (
 export const loginUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { email, password } = req.body;
 
   try {
-    const user = await UserModel.findOne({ email }).select("+password");
+    const user = await UserModel.findOne({ email }).select('+password');
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new UnauthorizedError("Incorrect email or password");
+      throw new UnauthorizedError('Incorrect email or password');
     }
 
-    const token = jwt.sign({ _id: user._id }, "secret-key", {
-      expiresIn: "1w",
+    const token = jwt.sign({ _id: user._id }, 'secret-key', {
+      expiresIn: '1w',
     });
 
-    res.cookie("token", token, {
+    res.cookie('token', token, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     next(error);
   }

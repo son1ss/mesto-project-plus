@@ -1,24 +1,24 @@
-import { Request, Response, NextFunction } from "express";
-import { CardModel, ICard } from "@models";
-import { ForbiddenError, NotFoundError } from "@type/errors";
+import { Request, Response, NextFunction } from 'express';
+import { CardModel, ICard } from '@models';
+import { ForbiddenError, NotFoundError } from '@type/errors';
 
 export const getAllCards = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const cards = await CardModel.find();
     res.json(cards);
   } catch (error) {
-    next(new Error("Failed to retrieve cards"));
+    next(new Error('Failed to retrieve cards'));
   }
 };
 
 export const createCard = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { name, link } = req.body;
   const ownerId = req.user?._id;
@@ -33,14 +33,14 @@ export const createCard = async (
     await newCard.save();
     res.status(201).json(newCard);
   } catch (error) {
-    next(error || new Error("Failed to create card"));
+    next(error || new Error('Failed to create card'));
   }
 };
 
 export const deleteCardById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { cardId } = req.params;
   const userId = req.user?._id;
@@ -49,7 +49,7 @@ export const deleteCardById = async (
     const card = await CardModel.findById(cardId);
 
     if (!card) {
-      throw new NotFoundError("Card not found");
+      throw new NotFoundError('Card not found');
     }
 
     if (card.owner.toString() !== userId) {
@@ -58,7 +58,7 @@ export const deleteCardById = async (
 
     const deletedCard = await CardModel.findByIdAndDelete(cardId);
 
-    res.json({ message: "Card deleted successfully", deletedCard });
+    res.json({ message: 'Card deleted successfully', deletedCard });
   } catch (error) {
     next(error);
   }
@@ -67,7 +67,7 @@ export const deleteCardById = async (
 export const likeCard = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const userId = req.user?._id;
 
@@ -75,11 +75,11 @@ export const likeCard = async (
     const likedCard = await CardModel.findByIdAndUpdate(
       req.params.cardId,
       { $addToSet: { likes: userId } },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     );
 
     if (!likedCard) {
-      throw new NotFoundError("Card not found");
+      throw new NotFoundError('Card not found');
     }
 
     res.json(likedCard);
@@ -91,7 +91,7 @@ export const likeCard = async (
 export const unlikeCard = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const userId = req.user?._id;
 
@@ -99,11 +99,11 @@ export const unlikeCard = async (
     const unlikedCard = await CardModel.findByIdAndUpdate(
       req.params.cardId,
       { $pull: { likes: userId } },
-      { new: true }
+      { new: true },
     );
 
     if (!unlikedCard) {
-      throw new NotFoundError("Card not found");
+      throw new NotFoundError('Card not found');
     }
 
     res.json(unlikedCard);

@@ -1,5 +1,5 @@
-import { celebrate } from "celebrate";
-import Joi from "joi";
+import { celebrate } from 'celebrate';
+import Joi from 'joi';
 
 export const createUserCelebrate = celebrate({
   body: Joi.object().keys({

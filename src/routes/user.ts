@@ -1,10 +1,10 @@
-import express from "express";
-import { UserController } from "@controllers";
+import express from 'express';
+import { UserController } from '@controllers';
 import {
   getUserByIdCelebrate,
   updateUserAvatarCelebrate,
   updateUserProfileCelebrate,
-} from "middleware/validation";
+} from 'middleware/validation';
 
 const {
   getAllUsers,
@@ -16,10 +16,10 @@ const {
 
 const router = express.Router();
 
-router.get("/", getAllUsers);
-router.get("/me", getUserProfile);
-router.get("/:userId", getUserByIdCelebrate, getUserById);
-router.patch("/me", updateUserProfileCelebrate, updateUserProfile);
-router.patch("/me/avatar", updateUserAvatarCelebrate, updateUserAvatar);
+router.get('/', getAllUsers);
+router.get('/me', getUserProfile);
+router.get('/:userId', getUserByIdCelebrate, getUserById);
+router.patch('/me', updateUserProfileCelebrate, updateUserProfile);
+router.patch('/me/avatar', updateUserAvatarCelebrate, updateUserAvatar);
 
 export { router };
