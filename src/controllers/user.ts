@@ -46,9 +46,9 @@ export const createUser = async (
   next: NextFunction,
 ) => {
   const {
-    name = 'Жак-Ив Кусто',
-    about = 'Исследователь',
-    avatar = 'стандартная ссылка',
+    name,
+    about,
+    avatar,
     email,
     password,
   } = req.body;
@@ -135,7 +135,7 @@ export const getUserProfile = async (
     const user = await UserModel.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      throw new NotFoundError('User not found');
     }
 
     res.json(user);
