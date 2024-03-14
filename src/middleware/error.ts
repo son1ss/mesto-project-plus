@@ -2,10 +2,7 @@ import { CelebrateError, isCelebrateError } from 'celebrate';
 import { NextFunction, Request, Response } from 'express';
 import { MongoError } from 'mongodb';
 import {
-  BadRequestError,
-  ForbiddenError,
-  NotFoundError,
-  UnauthorizedError,
+  BadRequestError, ForbiddenError, NotFoundError, UnauthorizedError,
 } from 'types/errors';
 
 export const errorHandler = (

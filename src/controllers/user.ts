@@ -2,16 +2,9 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 import { UserModel, IUser } from '@models';
-import {
-  NotFoundError,
-  UnauthorizedError,
-} from '@type/errors';
+import { NotFoundError, UnauthorizedError } from '@type/errors';
 
-export const getAllUsers = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await UserModel.find();
     res.json(users);
@@ -20,11 +13,7 @@ export const getAllUsers = async (
   }
 };
 
-export const getUserById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   const { userId } = req.params;
 
   try {
@@ -40,17 +29,9 @@ export const getUserById = async (
   }
 };
 
-export const createUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   const {
-    name,
-    about,
-    avatar,
-    email,
-    password,
+    name, about, avatar, email, password,
   } = req.body;
 
   try {
@@ -74,11 +55,7 @@ export const createUser = async (
   }
 };
 
-export const updateUserProfile = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const updateUserProfile = async (req: Request, res: Response, next: NextFunction) => {
   const { name, about } = req.body;
   const userId = req.user?._id;
 
@@ -99,11 +76,7 @@ export const updateUserProfile = async (
   }
 };
 
-export const updateUserAvatar = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const updateUserAvatar = async (req: Request, res: Response, next: NextFunction) => {
   const { avatar } = req.body;
   const userId = req.user?._id;
 
@@ -124,11 +97,7 @@ export const updateUserAvatar = async (
   }
 };
 
-export const getUserProfile = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getUserProfile = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.user?._id;
 
   try {
@@ -144,11 +113,7 @@ export const getUserProfile = async (
   }
 };
 
-export const loginUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body;
 
   try {

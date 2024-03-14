@@ -7,11 +7,7 @@ import {
 } from 'middleware/validation';
 
 const {
-  getAllUsers,
-  getUserById,
-  updateUserAvatar,
-  updateUserProfile,
-  getUserProfile,
+  getAllUsers, getUserById, updateUserAvatar, updateUserProfile, getUserProfile,
 } = UserController;
 
 const router = express.Router();

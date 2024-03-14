@@ -8,10 +8,7 @@ export const requestLogger = expressWinston.logger({
       filename: path.join(__dirname, '../../logs', 'request.log'),
     }),
   ],
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json(),
-  ),
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
 });
 
 export const errorLogger = expressWinston.errorLogger({
@@ -20,8 +17,5 @@ export const errorLogger = expressWinston.errorLogger({
       filename: path.join(__dirname, '../../logs', 'error.log'),
     }),
   ],
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json(),
-  ),
+  format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
 });

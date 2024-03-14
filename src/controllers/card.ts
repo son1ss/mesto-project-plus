@@ -2,11 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { CardModel, ICard } from '@models';
 import { ForbiddenError, NotFoundError } from '@type/errors';
 
-export const getAllCards = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getAllCards = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const cards = await CardModel.find();
     res.json(cards);
@@ -15,11 +11,7 @@ export const getAllCards = async (
   }
 };
 
-export const createCard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const createCard = async (req: Request, res: Response, next: NextFunction) => {
   const { name, link } = req.body;
   const ownerId = req.user?._id;
 
@@ -37,11 +29,7 @@ export const createCard = async (
   }
 };
 
-export const deleteCardById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const deleteCardById = async (req: Request, res: Response, next: NextFunction) => {
   const { cardId } = req.params;
   const userId = req.user?._id;
 
@@ -64,11 +52,7 @@ export const deleteCardById = async (
   }
 };
 
-export const likeCard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const likeCard = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.user?._id;
 
   try {
@@ -88,11 +72,7 @@ export const likeCard = async (
   }
 };
 
-export const unlikeCard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const unlikeCard = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.user?._id;
 
   try {
