@@ -13,6 +13,8 @@ export const errorHandler = (
 ) => {
   let statusCode = res.statusCode === 200 ? 500 : res.statusCode || 500;
 
+  console.log(error)
+
   if (
     error instanceof NotFoundError
     || error instanceof UnauthorizedError
@@ -22,7 +24,7 @@ export const errorHandler = (
     statusCode = error.statusCode;
   } else if (isCelebrateError(error)) {
     statusCode = 400;
-  } else if (error instanceof MongoError && error.code === 11000) {
+  } else if ((error as MongoError).code === 11000) {
     statusCode = 409;
   }
 
