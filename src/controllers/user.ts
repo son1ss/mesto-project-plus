@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 import { UserModel, IUser } from '@models';
 import {
-  BadRequestError,
   NotFoundError,
   UnauthorizedError,
 } from '@type/errors';
@@ -55,12 +54,6 @@ export const createUser = async (
   } = req.body;
 
   try {
-    const existingUser = await UserModel.findOne({ email });
-
-    if (existingUser) {
-      throw new BadRequestError('User with this email already exists');
-    }
-
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser: IUser = new UserModel({
@@ -72,7 +65,10 @@ export const createUser = async (
     });
 
     await newUser.save();
-    res.status(201).json(newUser);
+
+    const { password: hashedPwd, ...userWithoutPwd } = newUser.toObject();
+
+    res.status(201).json(userWithoutPwd);
   } catch (error) {
     next(error);
   }
