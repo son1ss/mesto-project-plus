@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cookie from 'cookie-parser';
+import dotenv from 'dotenv';
 import { CardRouter, UserRouter } from '@routes';
 import { UserController } from '@controllers';
 import {
@@ -13,12 +14,14 @@ import {
 } from '@middleware';
 import { NotFoundError } from '@type/errors';
 
+dotenv.config();
+
 const { createUser, loginUser } = UserController;
 
 const app = express();
 const port = 3000;
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
+mongoose.connect(`mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/mestodb`);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Ошибка БД:'));

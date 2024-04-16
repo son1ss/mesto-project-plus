@@ -13,7 +13,7 @@ export const errorHandler = (
 ) => {
   let statusCode = res.statusCode === 200 ? 500 : res.statusCode || 500;
 
-  console.log(error)
+  console.log(error);
 
   if (
     error instanceof NotFoundError

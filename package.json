@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "lint": "npx eslint src/**/*.ts",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "dev": "ts-node-dev -r tsconfig-paths/register src/app.ts",
     "start": "ts-node -r tsconfig-paths/register src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,8 +26,10 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
+    "prettier-eslint": "^16.3.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^4.7.4"
   },
@@ -35,6 +37,7 @@
     "bcrypt": "^5.1.1",
     "celebrate": "^15.0.3",
     "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
     "express": "^4.18.1",
     "express-winston": "^4.2.0",
     "joi": "^17.12.2",
