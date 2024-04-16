@@ -20,3 +20,5 @@ dist
 # HTTP test requests
 
 *.http
+
+*.env
