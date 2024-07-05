@@ -124,7 +124,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     }
 
     const token = jwt.sign({ _id: user._id }, 'secret-key', {
-      expiresIn: '1w',
+      expiresIn: '5w',
     });
 
     res.cookie('token', token, {
@@ -132,7 +132,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ message: 'Login successful' });
+    res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
     next(error);
   }
